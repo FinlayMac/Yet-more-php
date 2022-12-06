@@ -1,0 +1,193 @@
+-- phpMyAdmin SQL Dump
+-- version 5.1.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Dec 06, 2022 at 10:20 PM
+-- Server version: 10.4.18-MariaDB
+-- PHP Version: 7.4.16
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `bookshop`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `books`
+--
+
+CREATE TABLE `books` (
+  `book_id` int(11) NOT NULL,
+  `book_name` varchar(100) NOT NULL,
+  `book_author` varchar(50) NOT NULL,
+  `book_description` varchar(500) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `books`
+--
+
+INSERT INTO `books` (`book_id`, `book_name`, `book_author`, `book_description`) VALUES
+(2, 'Jungle Book', 'R. Kipling', 'A classic book.'),
+(3, 'Moonwalker', 'J. Walker', ''),
+(4, 'PHP for Dummies', 'Some Smart Guy', ''),
+(5, 'The Hobbit', 'J. R. R. Tolkien', 'The Hobbit, or There and Back Again is a children\'s fantasy novel by English author J. R. R. Tolkien. It was published in 1937 to wide critical acclaim, being nominated for the Carnegie Medal and awarded a prize from the New York Herald Tribune for best juvenile fiction.'),
+(6, 'A Game Of Thrones', 'George R. R. Martin', NULL),
+(7, 'A Clash of Kings', 'George R. R. Martin', NULL),
+(8, 'The Martian', 'Andy Weir', 'The Martian is a 2011 science fiction debut novel written by Andy Weir. The book was originally self-published on Weir\'s blog, in a serialized format.');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shops`
+--
+
+CREATE TABLE `shops` (
+  `shop_id` int(11) NOT NULL,
+  `shop_name` varchar(50) NOT NULL,
+  `shop_description` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `shops`
+--
+
+INSERT INTO `shops` (`shop_id`, `shop_name`, `shop_description`) VALUES
+(1, 'Aberdeen', 'The Granite City'),
+(2, 'Dundee', 'Jute, Jam and Journalism'),
+(3, 'Edinburgh', 'Auld Reekie'),
+(4, 'Inverness', 'The Sneck');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stock`
+--
+
+CREATE TABLE `stock` (
+  `stock_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `book_id` int(11) NOT NULL,
+  `book_quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `stock`
+--
+
+INSERT INTO `stock` (`stock_id`, `store_id`, `book_id`, `book_quantity`) VALUES
+(1, 1, 8, 30),
+(2, 1, 5, 30),
+(3, 1, 2, 30),
+(4, 2, 2, 30),
+(5, 2, 3, 30),
+(6, 3, 7, 100),
+(7, 4, 5, 30);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `user_id` int(11) NOT NULL,
+  `user_email` varchar(50) NOT NULL,
+  `user_password` varchar(128) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `user_email`, `user_password`) VALUES
+(7, 'user1@mail.com', '$2y$10$SALityL1IULJ8X/UM6aqCOtEY5/fgh82Xj3iPcP4G3TQ2TRa.NR/6'),
+(8, 'user2@gmail.com', '$2y$10$5ul1sMfMMkb3FOOFwouKCepfVGgUzLH.Mk5p9WrJCjNEDcd6oi/ey'),
+(9, 'finlay@finlaymail.com', '$2y$10$.oQrG1.1f0hSOJ9tct3kYePjc0MgW/c5whnCovCAmmvPdLymmXEUG'),
+(10, 'ross@mail.com', '$2y$10$oxaFl0B6xqQzgSAnFTJ6P.R66JxoADbmKtZd7koeMn4rrzp7Fmy0m'),
+(12, 'mail10@mail.com', '$2y$10$dargoDkZmyPVu3qGikNI5uN1N.iZV8eOfdo9VqhKPRAW3hrEF8CRW');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `books`
+--
+ALTER TABLE `books`
+  ADD PRIMARY KEY (`book_id`);
+
+--
+-- Indexes for table `shops`
+--
+ALTER TABLE `shops`
+  ADD PRIMARY KEY (`shop_id`);
+
+--
+-- Indexes for table `stock`
+--
+ALTER TABLE `stock`
+  ADD PRIMARY KEY (`stock_id`),
+  ADD KEY `ShopsStock` (`store_id`),
+  ADD KEY `BooksInStock` (`book_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `books`
+--
+ALTER TABLE `books`
+  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `shops`
+--
+ALTER TABLE `shops`
+  MODIFY `shop_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `stock`
+--
+ALTER TABLE `stock`
+  MODIFY `stock_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `stock`
+--
+ALTER TABLE `stock`
+  ADD CONSTRAINT `BooksInStock` FOREIGN KEY (`book_id`) REFERENCES `books` (`book_id`),
+  ADD CONSTRAINT `ShopsStock` FOREIGN KEY (`store_id`) REFERENCES `shops` (`shop_id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
